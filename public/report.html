@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Report Lost or Found Item - FindIt AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <header class="site-header"></header>
+
+  <main class="main-content">
+    <div class="container" style="max-width: 680px;">
+      <div class="card" style="padding: 2rem;">
+        <div style="margin-bottom: 1.5rem; border-bottom: 1px solid var(--outline-variant); padding-bottom: 1rem;">
+          <h1 style="font-size: 1.75rem;">Report a Campus Item</h1>
+          <p style="font-size: 0.8125rem; color: var(--on-surface-variant); margin-top: 0.25rem;">
+            Log misplaced or recovered student articles into the central university lost & found system.
+          </p>
+        </div>
+
+        <div id="pageReportAlert" style="display: none;" class="alert alert-error"></div>
+
+        <form id="pageReportForm">
+          <div class="form-group">
+            <label class="form-label">Report Category *</label>
+            <div style="display: flex; gap: 0.75rem;">
+              <label style="flex: 1; border: 1px solid var(--outline-variant); border-radius: var(--radius-lg); padding: 0.75rem; display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                <input type="radio" name="pageReportType" value="lost" id="typeLostRadio" checked />
+                <div>
+                  <span style="font-weight: 700; color: #be123c; display: block;">I Lost Something</span>
+                  <span style="font-size: 0.6875rem; color: var(--outline);">I misplaced an item on campus</span>
+                </div>
+              </label>
+
+              <label style="flex: 1; border: 1px solid var(--outline-variant); border-radius: var(--radius-lg); padding: 0.75rem; display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                <input type="radio" name="pageReportType" value="found" id="typeFoundRadio" />
+                <div>
+                  <span style="font-weight: 700; color: #047857; display: block;">I Found Something</span>
+                  <span style="font-size: 0.6875rem; color: var(--outline);">I turned in or found an item</span>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="itemTitle">Item Title *</label>
+            <input type="text" id="itemTitle" class="form-input" required placeholder="e.g. AirPods Pro with Blue Case, Student ID Card" />
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label class="form-label" for="itemCategory">Category *</label>
+              <select id="itemCategory" class="form-select" required>
+                <option value="Electronics & Audio">Electronics & Audio</option>
+                <option value="Student ID & Cards">Student ID & Cards</option>
+                <option value="Water Bottles & Tumblers">Water Bottles & Tumblers</option>
+                <option value="Wallets & Keys">Wallets & Keys</option>
+                <option value="Clothing & Backpacks">Clothing & Backpacks</option>
+                <option value="Books & Notebooks">Books & Notebooks</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="itemZone">Campus Zone *</label>
+              <select id="itemZone" class="form-select" required>
+                <option value="library">Main University Library</option>
+                <option value="student-union">Student Union Center</option>
+                <option value="sports">Rec Sports Complex</option>
+                <option value="science">Science & Engineering</option>
+                <option value="dining">Dining Commons</option>
+                <option value="east-quad">East Quad Pavilion</option>
+                <option value="other">Other / Campus Grounds</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="itemLocation">Specific Location Description *</label>
+            <input type="text" id="itemLocation" class="form-input" required placeholder="e.g. 2nd Floor Quiet Study Desk #24 near north windows" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="itemDescription">Detailed Description</label>
+            <textarea id="itemDescription" rows="4" class="form-textarea" placeholder="Include color, scratches, stickers, unique markings, or key identifiable characteristics..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Item Photo (Optional)</label>
+            <input type="file" id="itemImageFile" accept="image/*" class="form-input" style="padding: 0.35rem;" />
+            <p class="form-hint">Images are automatically scaled to max 800px and compressed under 300 KB.</p>
+            <div id="imagePreviewBox" style="margin-top: 0.75rem; display: none;">
+              <img id="imagePreviewEl" src="" alt="Resized Preview" style="max-height: 180px; border-radius: var(--radius-md); border: 1px solid var(--outline-variant);" />
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem; border-top: 1px solid var(--outline-variant); padding-top: 1rem;">
+            <a href="/dashboard.html" class="btn btn-secondary">Cancel</a>
+            <button type="submit" class="btn btn-primary" id="submitReportBtn">Submit Item Report</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer"></footer>
+
+  <script type="module" src="/js/report.js"></script>
+</body>
+</html>
