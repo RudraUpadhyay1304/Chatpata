@@ -1,0 +1,12 @@
+{
+  "framework": null,
+  "buildCommand": "",
+  "outputDirectory": "public",
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/api/items/:id/matches", "destination": "/api/items/[id]/matches?id=:id" },
+    { "source": "/api/items/:id", "destination": "/api/items/[id]?id=:id" },
+    { "source": "/api/claims/:id", "destination": "/api/claims/[id]?id=:id" },
+    { "source": "/api/(.*)", "destination": "/api/$1" }
+  ]
+}

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Profile - FindIt AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <header class="site-header"></header>
+
+  <main class="main-content">
+    <div class="container">
+      <div class="card" style="margin-bottom: 1.5rem;">
+        <h1 style="font-size: 1.5rem;">Student Profile & Settings</h1>
+        <p style="font-size: 0.8125rem; color: var(--on-surface-variant); margin-top: 0.25rem;">
+          Manage your campus credentials, pickup contact details, and department association.
+        </p>
+      </div>
+
+      <div class="app-layout">
+        <!-- Sidebar -->
+        <aside class="app-sidebar">
+          <div class="card card-sm">
+            <nav class="sidebar-nav">
+              <a href="/dashboard.html" class="sidebar-nav-item">
+                <span class="left-group">
+                  <span class="material-symbols-outlined">dashboard</span>
+                  <span>Dashboard</span>
+                </span>
+              </a>
+              <a href="/browse.html" class="sidebar-nav-item">
+                <span class="left-group">
+                  <span class="material-symbols-outlined">search</span>
+                  <span>Browse Catalog</span>
+                </span>
+              </a>
+              <a href="/my-reports.html" class="sidebar-nav-item">
+                <span class="left-group">
+                  <span class="material-symbols-outlined">inventory_2</span>
+                  <span>My Reports</span>
+                </span>
+              </a>
+              <a href="/my-claims.html" class="sidebar-nav-item">
+                <span class="left-group">
+                  <span class="material-symbols-outlined">verified</span>
+                  <span>My Claims</span>
+                </span>
+              </a>
+              <a href="/profile.html" class="sidebar-nav-item active">
+                <span class="left-group">
+                  <span class="material-symbols-outlined" style="color: var(--primary);">person</span>
+                  <span>Profile</span>
+                </span>
+              </a>
+            </nav>
+          </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="app-main" style="display: flex; flex-direction: column; gap: 1.5rem;">
+          <!-- Profile Identity Card -->
+          <div class="card">
+            <div style="display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap;">
+              <div class="avatar-badge" id="profileAvatar" style="width: 64px; height: 64px; font-size: 1.5rem; font-weight: 800;">U</div>
+              <div>
+                <div class="badge badge-found" style="margin-bottom: 0.25rem;">Verified Campus Member</div>
+                <h2 id="profileDisplayName" style="font-size: 1.25rem;">Student</h2>
+                <p id="profileUsername" style="font-size: 0.8125rem; color: var(--outline);">@username</p>
+              </div>
+            </div>
+
+            <!-- Micro Metrics Grid -->
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid var(--outline-variant);">
+              <div style="background: var(--surface-container-low); border: 1px solid var(--outline-variant); border-radius: var(--radius-lg); padding: 0.75rem;">
+                <span style="font-size: 0.625rem; text-transform: uppercase; color: var(--outline); font-weight: 700; display: block;">Active Reports</span>
+                <span id="metricReports" style="font-size: 1.125rem; font-weight: 800; color: var(--on-surface);">0</span>
+              </div>
+              <div style="background: var(--surface-container-low); border: 1px solid var(--outline-variant); border-radius: var(--radius-lg); padding: 0.75rem;">
+                <span style="font-size: 0.625rem; text-transform: uppercase; color: var(--outline); font-weight: 700; display: block;">Submitted Claims</span>
+                <span id="metricClaims" style="font-size: 1.125rem; font-weight: 800; color: var(--primary);">0</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Edit Profile Form -->
+          <div class="card">
+            <h3 style="font-size: 1.125rem; margin-bottom: 0.25rem;">Edit Contact & Department Details</h3>
+            <p style="font-size: 0.75rem; color: var(--on-surface-variant); margin-bottom: 1.25rem;">
+              These contact details are shown to campus security and item finders when coordinating verification.
+            </p>
+
+            <div id="profileAlert" style="display: none;" class="alert alert-success"></div>
+
+            <form id="profileForm">
+              <div class="form-group">
+                <label class="form-label" for="editDisplayName">Display Name</label>
+                <input type="text" id="editDisplayName" class="form-input" placeholder="e.g. Alex Chen" />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="editContact">Contact Phone or Email</label>
+                <input type="text" id="editContact" class="form-input" placeholder="e.g. (555) 382-9401 or student@university.edu" />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="editDepartment">Department / Major</label>
+                <select id="editDepartment" class="form-select">
+                  <option value="">Select Department (Optional)</option>
+                  <option value="Computer Science & Engineering">Computer Science & Engineering</option>
+                  <option value="Biomedical Sciences">Biomedical Sciences</option>
+                  <option value="Mechanical & Electrical Engineering">Mechanical & Electrical Engineering</option>
+                  <option value="School of Business & Economics">School of Business & Economics</option>
+                  <option value="Liberal Arts & Humanities">Liberal Arts & Humanities</option>
+                  <option value="Design & Architecture">Design & Architecture</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--outline-variant);">
+                <button type="button" class="btn btn-danger" id="profileLogoutBtn">
+                  <span class="material-symbols-outlined" style="font-size: 16px;">logout</span>
+                  <span>Log Out</span>
+                </button>
+                <button type="submit" class="btn btn-primary" id="saveProfileBtn">Save Changes</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer"></footer>
+
+  <script type="module" src="/js/profile.js"></script>
+</body>
+</html>
+
