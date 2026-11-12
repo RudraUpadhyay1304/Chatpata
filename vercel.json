@@ -1,4 +1,7 @@
 {
+  "framework": null,
+  "buildCommand": "",
+  "outputDirectory": "public",
   "cleanUrls": true,
   "rewrites": [
     { "source": "/api/items/:id/matches", "destination": "/api/items/[id]/matches?id=:id" },
