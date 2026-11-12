@@ -86,3 +86,4 @@ function renderFilteredItems() {
 }
 
 document.addEventListener('DOMContentLoaded', init);
+

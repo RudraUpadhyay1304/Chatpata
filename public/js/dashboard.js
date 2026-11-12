@@ -80,3 +80,4 @@ async function loadMyReports(userId) {
 }
 
 document.addEventListener('DOMContentLoaded', init);
+

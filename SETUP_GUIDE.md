@@ -124,3 +124,4 @@ Use this exact 3-minute script when presenting to professors or classmates:
 
 5. **Cross-User Claims Verification & Resolution (30 seconds)**:
    > "If I log in as a second student who found the item, I can see the report, submit proof of ownership, and as the finder, approve the claim. The status automatically updates to 'Claimed' across both accounts in real-time."
+

@@ -102,3 +102,4 @@ async function fetchAndRender() {
 }
 
 document.addEventListener('DOMContentLoaded', init);
+

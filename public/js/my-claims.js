@@ -206,3 +206,4 @@ function renderClaims() {
 }
 
 document.addEventListener('DOMContentLoaded', init);
+

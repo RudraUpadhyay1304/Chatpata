@@ -213,3 +213,4 @@ function openEditModal(item) {
 }
 
 document.addEventListener('DOMContentLoaded', init);
+

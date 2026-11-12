@@ -668,3 +668,4 @@ function escapeHtml(str) {
     "'": '&#39;'
   })[m]);
 }
+

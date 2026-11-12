@@ -178,3 +178,4 @@ async function loadMatches(id) {
 }
 
 document.addEventListener('DOMContentLoaded', init);
+

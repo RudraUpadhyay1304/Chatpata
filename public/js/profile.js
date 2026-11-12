@@ -77,3 +77,4 @@ async function loadUserStats() {
 }
 
 document.addEventListener('DOMContentLoaded', init);
+
