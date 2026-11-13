@@ -953,12 +953,7 @@ img {
 
 /* Footer */
 .site-footer {
-  background-color: var(--surface-container-lowest);
-  border-top: 1px solid var(--outline-variant);
-  padding: 1.5rem 0;
-  margin-top: auto;
-  font-size: 0.75rem;
-  color: var(--outline);
+  display: none;
 }
 
 .footer-container {

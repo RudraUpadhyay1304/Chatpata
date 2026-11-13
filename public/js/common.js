@@ -196,7 +196,6 @@ export async function initApp(options = {}) {
   }
 
   renderNavbar();
-  renderFooter();
   setupGlobalModals();
 
   return currentUser;
@@ -351,32 +350,6 @@ function renderNavbar() {
       }
     });
   }
-}
-
-/**
- * Render Global Footer
- */
-function renderFooter() {
-  const footer = document.querySelector('.site-footer');
-  if (!footer) return;
-
-  footer.innerHTML = `
-    <div class="container footer-container">
-      <div style="display: flex; align-items: center; gap: 0.5rem;">
-        <span class="brand-icon" style="width: 22px; height: 22px;">
-          <span class="material-symbols-outlined fill" style="font-size: 14px;">auto_awesome</span>
-        </span>
-        <span style="font-weight: 700; color: var(--on-surface);">FindIt AI</span>
-        <span>• Campus Lost & Found College Project</span>
-      </div>
-      <div class="footer-links">
-        <a href="/browse.html">Browse Items</a>
-        <a href="/report.html?type=lost">Report Lost</a>
-        <a href="/report.html?type=found">Report Found</a>
-        <a href="/dashboard.html">Dashboard</a>
-      </div>
-    </div>
-  `;
 }
 
 /**
