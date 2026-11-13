@@ -1,4 +1,4 @@
-# FindIt vryctgbvkjjjjjmnlAI — Campus Lost & Found Platform
+# FindIt — Campus Lost & Found Platform
 
 A campus-scale Lost & Found web platform engineered for universities, students, and campus administrators. Built with **pure vanilla HTML, CSS, and JavaScript** with zero build steps, deployed seamlessly on Vercel Serverless Functions with MongoDB Atlas.
 
