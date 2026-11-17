@@ -1,9 +1,10 @@
 /**
  * POST /api/auth/register
  * Registers a new campus user with username and password.
+ * Simple, standard Node.js & MongoDB handler without bcrypt or jwt packages.
  */
 import { connectToDatabase } from '../../lib/db.js';
-import { hashPassword, signToken, createAuthCookie } from '../../lib/auth.js';
+import { signToken, createAuthCookie } from '../../lib/auth.js';
 import { validateUsername, validatePassword, parseBody } from '../../lib/validation.js';
 
 export default async function handler(req, res) {
@@ -44,14 +45,11 @@ export default async function handler(req, res) {
       return res.status(409).json({ error: 'Username is already taken.' });
     }
 
-    // 4. Hash password with bcryptjs
-    const passwordHash = await hashPassword(password);
-
-    // 5. Insert new user document
+    // 4. Insert new user document
     const newUser = {
       username: username.trim(),
       usernameLower,
-      passwordHash,
+      password: password, // Simple direct password storage
       displayName: username.trim(),
       contact: '',
       department: '',
@@ -61,7 +59,7 @@ export default async function handler(req, res) {
     const result = await db.collection('users').insertOne(newUser);
     const userId = result.insertedId.toString();
 
-    // 6. Generate session JWT token and set httpOnly cookie
+    // 5. Generate session cookie
     const token = signToken({ id: userId, username: newUser.username });
     const isSecure = process.env.NODE_ENV === 'production';
     res.setHeader('Set-Cookie', createAuthCookie(token, isSecure));
@@ -79,4 +77,3 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'Internal server error' });
   }
 }
-

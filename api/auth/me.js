@@ -27,7 +27,7 @@ export default async function handler(req, res) {
 
     const user = await db.collection('users').findOne(
       { _id: queryId },
-      { projection: { passwordHash: 0 } }
+      { projection: { password: 0, passwordHash: 0 } }
     );
 
     if (!user) {
@@ -49,4 +49,3 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'Internal server error' });
   }
 }
-

@@ -15,7 +15,6 @@ import logoutHandler from './api/auth/logout.js';
 import meHandler from './api/auth/me.js';
 import itemsIndexHandler from './api/items/index.js';
 import itemByIdHandler from './api/items/[id].js';
-import itemMatchesHandler from './api/items/[id]/matches.js';
 import claimsIndexHandler from './api/claims/index.js';
 import claimByIdHandler from './api/claims/[id].js';
 import statsHandler from './api/stats.js';
@@ -76,13 +75,6 @@ const server = http.createServer(async (req, res) => {
       if (pathname === '/api/auth/logout') return await logoutHandler(req, res);
       if (pathname === '/api/auth/me') return await meHandler(req, res);
       if (pathname === '/api/items') return await itemsIndexHandler(req, res);
-
-      // Matches: /api/items/:id/matches
-      const itemMatchesMatch = pathname.match(/^\/api\/items\/([^/]+)\/matches\/?$/);
-      if (itemMatchesMatch) {
-        req.query.id = itemMatchesMatch[1];
-        return await itemMatchesHandler(req, res);
-      }
 
       // Items [id]: /api/items/:id
       const itemMatch = pathname.match(/^\/api\/items\/([^/]+)\/?$/);

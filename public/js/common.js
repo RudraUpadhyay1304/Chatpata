@@ -268,10 +268,6 @@ function renderNavbar() {
       <div class="nav-actions">
         <a href="/browse.html" class="nav-link ${currentPath.includes('browse') ? 'active' : ''}">Browse</a>
         ${currentUser ? `<a href="/dashboard.html" class="nav-link ${currentPath.includes('dashboard') ? 'active' : ''}">Dashboard</a>` : ''}
-        <button class="btn btn-primary btn-sm" id="globalReportBtn">
-          <span class="material-symbols-outlined" style="font-size: 16px;">add_circle</span>
-          <span>Report Item</span>
-        </button>
         ${authHtml}
         <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle menu">
           <span class="material-symbols-outlined">menu</span>
@@ -335,18 +331,6 @@ function renderNavbar() {
         window.location.href = '/login.html';
       } catch (err) {
         alert('Logout failed: ' + err.message);
-      }
-    });
-  }
-
-  // Global report button
-  const reportBtn = document.getElementById('globalReportBtn');
-  if (reportBtn) {
-    reportBtn.addEventListener('click', () => {
-      if (!currentUser) {
-        window.location.href = '/login.html?redirect=' + encodeURIComponent('/report.html');
-      } else {
-        openReportModal();
       }
     });
   }
@@ -548,8 +532,8 @@ function setupGlobalModals() {
         image: currentResizedDataUrl
       });
       closeReport();
-      // Redirect to smart matches for this newly submitted item
-      window.location.href = `/matches.html?id=${encodeURIComponent(res.item.id)}`;
+      // Redirect to item details for this newly submitted item
+      window.location.href = `/item.html?id=${encodeURIComponent(res.item.id)}`;
     } catch (err) {
       alertBox.textContent = err.message;
       alertBox.style.display = 'flex';
@@ -606,7 +590,7 @@ function setupGlobalModals() {
 
 export function openReportModal(defaultType = 'lost') {
   if (!currentUser) {
-    window.location.href = '/login.html?redirect=' + encodeURIComponent('/report.html');
+    window.location.href = '/login.html?redirect=' + encodeURIComponent(window.location.pathname);
     return;
   }
   const modal = document.getElementById('globalReportModal');

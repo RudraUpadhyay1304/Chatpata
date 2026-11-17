@@ -54,7 +54,6 @@ export const api = {
   createItem: (payload) => request('/api/items', { method: 'POST', body: payload }),
   updateItem: (id, payload) => request(`/api/items/${encodeURIComponent(id)}`, { method: 'PUT', body: payload }),
   deleteItem: (id) => request(`/api/items/${encodeURIComponent(id)}`, { method: 'DELETE' }),
-  getItemMatches: (id) => request(`/api/items/${encodeURIComponent(id)}/matches`),
 
   // --- CLAIMS ---
   getClaims: (type) => request(`/api/claims${type ? '?type=' + encodeURIComponent(type) : ''}`),

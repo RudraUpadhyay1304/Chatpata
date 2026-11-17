@@ -13,9 +13,6 @@ async function init() {
   currentUser = await initApp({ requireLogin: true });
   if (!currentUser) return;
 
-  document.getElementById('newReportBtn')?.addEventListener('click', () => openReportModal('lost'));
-  document.getElementById('emptyCreateReportBtn')?.addEventListener('click', () => openReportModal('lost'));
-
   // Tab listeners
   const tabs = document.querySelectorAll('.report-tab');
   tabs.forEach((tab) => {
@@ -128,12 +125,6 @@ function renderReports() {
       actionsRow.style.paddingTop = '0.75rem';
       actionsRow.style.marginTop = '0.75rem';
       actionsRow.style.borderTop = '1px solid var(--outline-variant)';
-
-      const matchesBtn = document.createElement('a');
-      matchesBtn.href = `/matches.html?id=${encodeURIComponent(item.id)}`;
-      matchesBtn.className = 'btn btn-outline btn-sm';
-      matchesBtn.textContent = 'Smart Matches';
-      actionsRow.appendChild(matchesBtn);
 
       const editBtn = document.createElement('button');
       editBtn.className = 'btn btn-secondary btn-sm';

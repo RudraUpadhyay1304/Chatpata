@@ -86,13 +86,6 @@ function renderActionButtons() {
 
   const isOwner = currentUser && currentItem.ownerId === currentUser.id;
 
-  // Smart Matches button for all items
-  const matchesLink = document.createElement('a');
-  matchesLink.href = `/matches.html?id=${encodeURIComponent(currentItem.id)}`;
-  matchesLink.className = 'btn btn-outline';
-  matchesLink.innerHTML = '<span class="material-symbols-outlined fill" style="font-size: 16px;">auto_awesome</span><span>View Smart Matches</span>';
-  container.appendChild(matchesLink);
-
   // If item is found, active, and current user is NOT the owner -> Claim button
   if (currentItem.type === 'found' && currentItem.status === 'active' && !isOwner) {
     const claimBtn = document.createElement('button');
