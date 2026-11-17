@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Matches - FindIt AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <header class="site-header"></header>
+
+  <main class="main-content">
+    <div class="container" style="max-width: 960px;">
+      <div style="margin-bottom: 1.5rem;">
+        <a id="backToItemLink" href="/browse.html" class="nav-link" style="display: inline-flex; align-items: center; gap: 0.375rem; padding-left: 0;">
+          <span class="material-symbols-outlined" style="font-size: 16px;">arrow_back</span>
+          <span>Back to Item Details</span>
+        </a>
+      </div>
+
+      <div id="matchesLoading" style="text-align: center; padding: 4rem;">
+        <span class="material-symbols-outlined" style="font-size: 36px; color: var(--primary); animation: spin 1s linear infinite;">progress_activity</span>
+        <p style="font-size: 0.75rem; color: var(--outline); margin-top: 0.5rem;">Computing algorithmic smart matches...</p>
+      </div>
+
+      <div id="matchesContent" style="display: none;">
+        <!-- Target Item Reference Card -->
+        <div class="card" style="margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+          <div style="display: flex; align-items: center; gap: 1rem;">
+            <img id="targetImg" src="" alt="Target item" style="width: 64px; height: 64px; border-radius: var(--radius-lg); object-fit: cover; background: var(--surface-container);" />
+            <div>
+              <div style="display: flex; gap: 0.5rem; align-items: center; margin-bottom: 0.25rem;">
+                <span style="font-size: 0.625rem; font-weight: 700; text-transform: uppercase; color: var(--outline);">Target Source Item</span>
+                <span id="targetTypeBadge" class="badge"></span>
+              </div>
+              <h2 id="targetTitle" style="font-size: 1.125rem;"></h2>
+              <p id="targetMeta" style="font-size: 0.75rem; color: var(--on-surface-variant);"></p>
+            </div>
+          </div>
+
+          <div class="badge badge-match" style="font-size: 0.8125rem; padding: 0.375rem 0.75rem;">
+            <span class="material-symbols-outlined fill" style="font-size: 16px;">auto_awesome</span>
+            <span id="matchCounterText">0 Counter-Matches</span>
+          </div>
+        </div>
+
+        <!-- Engine Explanation -->
+        <div class="alert alert-info" style="margin-bottom: 2rem;">
+          <span class="material-symbols-outlined" style="color: var(--primary);">info</span>
+          <div>
+            <strong style="display: block;">Algorithmic Smart Matching</strong>
+            <span>Evaluates category matches, campus zone proximity, and title/description token overlap on real database items. Matches with zero overlap are excluded.</span>
+          </div>
+        </div>
+
+        <!-- Matches Results -->
+        <div>
+          <h3 style="font-size: 1.25rem; margin-bottom: 1rem;">Ranked Counter-Item Matches</h3>
+          <div id="matchesList" style="display: flex; flex-direction: column; gap: 1rem;"></div>
+
+          <div id="noMatchesEmpty" class="empty-state" style="display: none;">
+            <div class="empty-state-icon">
+              <span class="material-symbols-outlined">search</span>
+            </div>
+            <h3 class="empty-state-title">No Complementary Matches Found</h3>
+            <p class="empty-state-desc">
+              Currently no complementary listings match this item's category, campus zone, or keywords. As new reports are filed, matches will appear here.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer"></footer>
+
+  <script type="module" src="/js/matches.js"></script>
+</body>
+</html>
+

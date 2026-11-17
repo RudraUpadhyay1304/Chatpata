@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Browse Items - FindIt AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <header class="site-header"></header>
+
+  <main class="main-content">
+    <div class="container">
+      <div style="margin-bottom: 1.5rem;">
+        <h1 style="font-size: 1.75rem;">Campus Lost & Found Directory</h1>
+        <p style="font-size: 0.8125rem; color: var(--on-surface-variant); margin-top: 0.25rem;">
+          Search and filter registered lost articles and turned-in valuables across university grounds.
+        </p>
+      </div>
+
+      <!-- Filter Controls Toolbar -->
+      <div class="card" style="padding: 1.25rem; margin-bottom: 2rem;">
+        <form id="filterForm" style="display: flex; flex-direction: column; gap: 0.75rem;">
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+            <div class="input-with-icon" style="flex: 2; min-width: 240px;">
+              <span class="material-symbols-outlined">search</span>
+              <input type="text" id="filterSearch" class="form-input" placeholder="Search by title, location or keywords..." />
+            </div>
+
+            <select id="filterType" class="form-select" style="flex: 1; min-width: 130px;">
+              <option value="all">All Types</option>
+              <option value="lost">Lost Only</option>
+              <option value="found">Found Only</option>
+            </select>
+
+            <select id="filterCategory" class="form-select" style="flex: 1.2; min-width: 160px;">
+              <option value="all">All Categories</option>
+              <option value="Electronics & Audio">Electronics & Audio</option>
+              <option value="Student ID & Cards">Student ID & Cards</option>
+              <option value="Water Bottles & Tumblers">Water Bottles & Tumblers</option>
+              <option value="Wallets & Keys">Wallets & Keys</option>
+              <option value="Clothing & Backpacks">Clothing & Backpacks</option>
+              <option value="Books & Notebooks">Books & Notebooks</option>
+              <option value="Other">Other</option>
+            </select>
+
+            <select id="filterZone" class="form-select" style="flex: 1.2; min-width: 160px;">
+              <option value="all">All Campus Zones</option>
+              <option value="library">Main University Library</option>
+              <option value="student-union">Student Union Center</option>
+              <option value="sports">Rec Sports Complex</option>
+              <option value="science">Science & Engineering</option>
+              <option value="dining">Dining Commons</option>
+              <option value="east-quad">East Quad Pavilion</option>
+              <option value="other">Other Campus Grounds</option>
+            </select>
+
+            <button type="submit" class="btn btn-primary">Apply Filters</button>
+            <button type="button" class="btn btn-secondary" id="resetFiltersBtn">Reset</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Results Count & Listing -->
+      <div>
+        <p id="resultsCounter" style="font-size: 0.75rem; color: var(--outline); margin-bottom: 1rem;">
+          Loading items...
+        </p>
+
+        <div id="browseLoading" style="text-align: center; padding: 4rem;">
+          <span class="material-symbols-outlined" style="font-size: 36px; color: var(--primary); animation: spin 1s linear infinite;">progress_activity</span>
+          <p style="font-size: 0.75rem; color: var(--outline); margin-top: 0.5rem;">Filtering catalog...</p>
+        </div>
+
+        <div class="items-grid" id="browseGrid" style="display: none;"></div>
+
+        <div id="browseEmpty" class="empty-state" style="display: none;">
+          <div class="empty-state-icon">
+            <span class="material-symbols-outlined">search_off</span>
+          </div>
+          <h3 class="empty-state-title">No Matching Items Found</h3>
+          <p class="empty-state-desc">Try loosening your keyword search or switching to "All Categories" and "All Campus Zones".</p>
+          <button class="btn btn-secondary" id="emptyClearBtn">Clear All Filters</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer"></footer>
+
+  <script type="module" src="/js/browse.js"></script>
+</body>
+</html>
+

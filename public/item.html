@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Item Details - FindIt AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <header class="site-header"></header>
+
+  <main class="main-content">
+    <div class="container" style="max-width: 900px;">
+      <!-- Breadcrumbs & Share -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <a href="/browse.html" class="nav-link" style="display: inline-flex; align-items: center; gap: 0.375rem; padding-left: 0;">
+          <span class="material-symbols-outlined" style="font-size: 16px;">arrow_back</span>
+          <span>Back to Campus Directory</span>
+        </a>
+
+        <div style="display: flex; gap: 0.5rem;">
+          <button type="button" class="btn btn-secondary btn-sm" id="shareBtn">
+            <span class="material-symbols-outlined" style="font-size: 16px;" id="shareIcon">share</span>
+            <span id="shareText">Share</span>
+          </button>
+        </div>
+      </div>
+
+      <div id="itemLoading" style="text-align: center; padding: 4rem;">
+        <span class="material-symbols-outlined" style="font-size: 36px; color: var(--primary); animation: spin 1s linear infinite;">progress_activity</span>
+        <p style="font-size: 0.75rem; color: var(--outline); margin-top: 0.5rem;">Loading item details...</p>
+      </div>
+
+      <div id="itemContainer" style="display: none;">
+        <div class="card" style="padding: 0; overflow: hidden;">
+          <div style="display: grid; grid-template-columns: 1fr; gap: 0;" id="detailsGrid">
+            <!-- Image Section -->
+            <div style="background-color: var(--surface-container); min-height: 280px; position: relative;">
+              <img id="detailImg" src="" alt="Campus item" style="width: 100%; height: 100%; max-height: 400px; object-fit: cover;" />
+              <div style="position: absolute; top: 1rem; left: 1rem; display: flex; gap: 0.5rem;">
+                <span id="typeBadgeEl" class="badge"></span>
+                <span id="statusBadgeEl" class="badge" style="display: none;"></span>
+              </div>
+            </div>
+
+            <!-- Details Section -->
+            <div style="padding: 1.75rem; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                  <span id="detailCategory" class="badge badge-active"></span>
+                  <span id="detailDate" style="font-size: 0.75rem; color: var(--outline);"></span>
+                </div>
+
+                <h1 id="detailTitle" style="font-size: 1.75rem; margin-bottom: 0.75rem;"></h1>
+
+                <div style="display: flex; align-items: center; gap: 0.5rem; background: var(--surface-container-low); border: 1px solid var(--outline-variant); border-radius: var(--radius-lg); padding: 0.75rem; margin-bottom: 1.25rem;">
+                  <span class="material-symbols-outlined" style="color: var(--primary); font-size: 22px;">location_on</span>
+                  <div>
+                    <span id="detailLocation" style="font-weight: 700; font-size: 0.875rem; display: block;"></span>
+                    <span id="detailZone" style="font-size: 0.6875rem; color: var(--outline);">Designated Campus Zone</span>
+                  </div>
+                </div>
+
+                <div style="margin-bottom: 1.5rem;">
+                  <h3 style="font-size: 0.875rem; margin-bottom: 0.375rem;">Description & Distinguishing Features</h3>
+                  <p id="detailDescription" style="font-size: 0.8125rem; color: var(--on-surface-variant); line-height: 1.6; white-space: pre-wrap;"></p>
+                </div>
+
+                <div style="padding-top: 1rem; border-top: 1px solid var(--outline-variant); margin-bottom: 1.5rem;">
+                  <p style="font-size: 0.75rem; color: var(--outline);">
+                    Reported by: <span id="detailReporter" style="font-weight: 600; color: var(--on-surface);"></span>
+                  </p>
+                </div>
+              </div>
+
+              <!-- Action Buttons -->
+              <div id="actionButtonsContainer" style="display: flex; gap: 0.75rem; flex-wrap: wrap;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="itemNotFound" class="empty-state" style="display: none;">
+        <div class="empty-state-icon">
+          <span class="material-symbols-outlined">inventory_2</span>
+        </div>
+        <h3 class="empty-state-title">Item Listing Not Found</h3>
+        <p class="empty-state-desc">This lost or found article listing does not exist or has been removed.</p>
+        <a href="/browse.html" class="btn btn-primary">Return to Catalog</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer"></footer>
+
+  <script type="module" src="/js/item.js"></script>
+</body>
+</html>
+
