@@ -7,7 +7,7 @@
 import { ObjectId } from 'mongodb';
 import { connectToDatabase } from '../../lib/db.js';
 import { requireAuth } from '../../lib/auth.js';
-import { parseBody } from '../../lib/validation.js';
+import { parseBody, validatePhoneNumber } from '../../lib/validation.js';
 
 function parseId(id) {
   try {
@@ -78,7 +78,13 @@ export default async function handler(req, res) {
         updates.category = body.category.trim().substring(0, 50);
       }
       if (typeof body.zone === 'string' && body.zone.trim()) {
-        updates.zone = body.zone.trim().substring(0, 50);
+        updates.zone = body.zone.trim().substring(0, 60);
+      }
+      if (typeof body.phone === 'string' && body.phone.trim()) {
+        if (!validatePhoneNumber(body.phone)) {
+          return res.status(400).json({ error: 'Please provide a valid phone number (at least 10 digits).' });
+        }
+        updates.phone = body.phone.trim().substring(0, 25);
       }
       if (typeof body.status === 'string' && ['active', 'claimed', 'resolved'].includes(body.status)) {
         updates.status = body.status;

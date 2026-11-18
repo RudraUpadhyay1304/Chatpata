@@ -25,3 +25,8 @@ Thumbs.db
 *.njsproj
 *.sln
 *.sw?
+
+# Local Project Reports (do not upload to git)
+PROJECT_REPORT.html
+*REPORT*.html
+*report*.html

@@ -5,7 +5,7 @@
  */
 import { connectToDatabase } from '../../lib/db.js';
 import { requireAuth } from '../../lib/auth.js';
-import { escapeRegex, validateImageDataUrl, parseBody } from '../../lib/validation.js';
+import { escapeRegex, validateImageDataUrl, validatePhoneNumber, parseBody } from '../../lib/validation.js';
 
 export default async function handler(req, res) {
   const { db } = await connectToDatabase();
@@ -100,7 +100,8 @@ export default async function handler(req, res) {
         title,
         category,
         location,
-        zone = 'library',
+        zone = 'other',
+        phone,
         description = '',
         image = ''
       } = body;
@@ -122,6 +123,13 @@ export default async function handler(req, res) {
         return res.status(400).json({ error: 'Location is required.' });
       }
 
+      // Phone validation (Mandatory for reporter contact)
+      if (!phone || !validatePhoneNumber(phone)) {
+        return res.status(400).json({
+          error: 'A valid contact phone number (at least 10 digits) is mandatory so others can reach you.'
+        });
+      }
+
       // Max 300 KB image check
       if (image && !validateImageDataUrl(image)) {
         return res.status(400).json({
@@ -134,7 +142,8 @@ export default async function handler(req, res) {
         title: title.trim().substring(0, 100),
         category: category.trim().substring(0, 50),
         location: location.trim().substring(0, 150),
-        zone: typeof zone === 'string' ? zone.trim().substring(0, 50) : 'other',
+        zone: typeof zone === 'string' && zone.trim() ? zone.trim().substring(0, 60) : 'other',
+        phone: phone.trim().substring(0, 25),
         description: typeof description === 'string' ? description.trim().substring(0, 1000) : '',
         image: image || '',
         status: 'active', // 'active', 'claimed', 'resolved'

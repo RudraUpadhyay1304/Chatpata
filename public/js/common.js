@@ -83,6 +83,45 @@ export function resizeImageToDataUrl(file) {
   });
 }
 
+export const CAMPUS_ZONES = [
+  { id: 'main-gate-parking', label: 'Main Gate Parking Area' },
+  { id: 'principal-office', label: 'Principal Office' },
+  { id: 'academic-block', label: 'Academic Block' },
+  { id: 'b-block', label: 'B Block' },
+  { id: 'c-block', label: 'C Block' },
+  { id: 'd-block', label: 'D Block' },
+  { id: 'e-block', label: 'E Block' },
+  { id: 'cs-department', label: 'CS Department' },
+  { id: 'cyber-department', label: 'Cyber Department' },
+  { id: 'football-ground', label: 'Football Ground' },
+  { id: 'basketball-court', label: 'Basketball Court' },
+  { id: 'sports-department', label: 'Sports Departmental Area' },
+  { id: 'yashwant-hall', label: 'Yashwant Hall' },
+  { id: 'other', label: 'Other Campus Area' }
+];
+
+export function getZoneLabel(zoneId) {
+  if (!zoneId) return 'Campus Area';
+  if (zoneId.startsWith('Other:')) return zoneId;
+  const found = CAMPUS_ZONES.find(z => z.id === zoneId);
+  return found ? found.label : zoneId;
+}
+
+export function cleanPhoneNumber(phone) {
+  return (phone || '').replace(/\s+/g, '');
+}
+
+export function getWhatsAppUrl(phone, item = {}) {
+  let digits = (phone || '').replace(/\D/g, '');
+  if (digits.length === 10) {
+    digits = '91' + digits; // Default Indian 10-digit mobile number prefix
+  }
+  const typeStr = (item.type || 'item').toUpperCase();
+  const titleStr = item.title || 'Item';
+  const text = encodeURIComponent(`Hi! I saw your ${typeStr} report for "${titleStr}" on FindIt Campus Platform. Connecting regarding this.`);
+  return `https://wa.me/${digits}?text=${text}`;
+}
+
 /**
  * Creates an item card DOM element safely using textContent for all user strings
  */
@@ -142,7 +181,7 @@ export function createItemCardElement(item, onClaimClick) {
   locP.appendChild(locIcon);
 
   const locText = document.createElement('span');
-  locText.textContent = `${item.location} • ${item.category}`;
+  locText.textContent = `${item.location} (${getZoneLabel(item.zone)}) • ${item.category}`;
   locP.appendChild(locText);
   topMeta.appendChild(locP);
 
@@ -151,6 +190,17 @@ export function createItemCardElement(item, onClaimClick) {
   timeP.style.color = 'var(--outline)';
   timeP.textContent = `Logged ${timeAgo(item.createdAt)}`;
   topMeta.appendChild(timeP);
+
+  // Display phone number if available
+  if (item.phone) {
+    const phoneP = document.createElement('p');
+    phoneP.className = 'item-card-meta';
+    phoneP.style.color = 'var(--on-surface)';
+    phoneP.style.fontWeight = '600';
+    phoneP.style.marginTop = '0.35rem';
+    phoneP.innerHTML = `<span class="material-symbols-outlined" style="font-size: 14px; vertical-align: -2px; color: var(--primary);">phone</span> <span>${item.phone}</span>`;
+    topMeta.appendChild(phoneP);
+  }
 
   body.appendChild(topMeta);
 
@@ -390,22 +440,47 @@ function setupGlobalModals() {
             </div>
 
             <div class="form-group">
-              <label class="form-label" for="reportZone">Campus Zone *</label>
+              <label class="form-label" for="reportZone">Campus Area *</label>
               <select id="reportZone" class="form-select" required>
-                <option value="library">Main University Library</option>
-                <option value="student-union">Student Union Center</option>
-                <option value="sports">Rec Sports Complex</option>
-                <option value="science">Science & Engineering</option>
-                <option value="dining">Dining Commons</option>
-                <option value="east-quad">East Quad Pavilion</option>
-                <option value="other">Other / Campus Grounds</option>
+                <option value="main-gate-parking">Main Gate Parking Area</option>
+                <option value="principal-office">Principal Office</option>
+                <option value="academic-block">Academic Block</option>
+                <option value="b-block">B Block</option>
+                <option value="c-block">C Block</option>
+                <option value="d-block">D Block</option>
+                <option value="e-block">E Block</option>
+                <option value="cs-department">CS Department</option>
+                <option value="cyber-department">Cyber Department</option>
+                <option value="football-ground">Football Ground</option>
+                <option value="basketball-court">Basketball Court</option>
+                <option value="sports-department">Sports Departmental Area</option>
+                <option value="yashwant-hall">Yashwant Hall</option>
+                <option value="other">Other (Type Custom Area)</option>
               </select>
             </div>
           </div>
 
+          <!-- Dynamic Other Area Input (Shown when 'Other' is selected) -->
+          <div class="form-group" id="reportOtherZoneGroup" style="display: none;">
+            <label class="form-label" for="reportOtherZone">Type Other Campus Area Name *</label>
+            <input type="text" id="reportOtherZone" class="form-input" placeholder="e.g. Canteen, Mechanical Lab, South Garden" />
+          </div>
+
+          <!-- Mandatory Contact Phone Number -->
+          <div class="form-group">
+            <label class="form-label" for="reportPhone">
+              <span class="material-symbols-outlined" style="font-size: 16px; vertical-align: -3px; color: var(--primary);">call</span>
+              Contact Phone Number *
+            </label>
+            <input type="tel" id="reportPhone" class="form-input" required placeholder="e.g. 9876543210 or +91 9876543210" pattern="[0-9+ \-]{10,16}" title="Please enter at least 10 digits" />
+            <small style="font-size: 0.72rem; color: var(--outline); display: block; margin-top: 0.25rem;">
+              Campus members will see this phone number to reach you regarding this item.
+            </small>
+          </div>
+
           <div class="form-group">
             <label class="form-label" for="reportLocation">Specific Location Description *</label>
-            <input type="text" id="reportLocation" class="form-input" required placeholder="e.g. 2nd Floor Quiet Study Desk #24" />
+            <input type="text" id="reportLocation" class="form-input" required placeholder="e.g. 2nd Floor, Room 204, Bench near gate" />
           </div>
 
           <div class="form-group">
@@ -494,11 +569,26 @@ function setupGlobalModals() {
     });
   }
 
+  const reportZoneSelect = document.getElementById('reportZone');
+  const reportOtherGroup = document.getElementById('reportOtherZoneGroup');
+  const reportOtherInput = document.getElementById('reportOtherZone');
+
+  if (reportZoneSelect && reportOtherGroup) {
+    reportZoneSelect.addEventListener('change', () => {
+      const isOther = reportZoneSelect.value === 'other';
+      reportOtherGroup.style.display = isOther ? 'block' : 'none';
+      if (isOther && reportOtherInput) {
+        reportOtherInput.focus();
+      }
+    });
+  }
+
   const closeReport = () => {
     reportModal.classList.remove('open');
     reportForm.reset();
     currentResizedDataUrl = '';
     previewContainer.style.display = 'none';
+    if (reportOtherGroup) reportOtherGroup.style.display = 'none';
     document.getElementById('reportModalAlert').style.display = 'none';
   };
 
@@ -518,15 +608,42 @@ function setupGlobalModals() {
     const title = document.getElementById('reportTitle').value.trim();
     const category = document.getElementById('reportCategory').value;
     const zone = document.getElementById('reportZone').value;
+    const phone = document.getElementById('reportPhone').value.trim();
     const location = document.getElementById('reportLocation').value.trim();
     const description = document.getElementById('reportDesc').value.trim();
+
+    // Validate phone number
+    const phoneDigits = phone.replace(/\D/g, '');
+    if (!phone || phoneDigits.length < 10) {
+      alertBox.textContent = 'A valid contact phone number with at least 10 digits is mandatory.';
+      alertBox.style.display = 'flex';
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Submit Report';
+      return;
+    }
+
+    // Determine final zone string
+    let finalZone = zone;
+    if (zone === 'other') {
+      const customArea = reportOtherInput?.value.trim();
+      if (!customArea) {
+        alertBox.textContent = 'Please type your custom campus area name in the box provided.';
+        alertBox.style.display = 'flex';
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit Report';
+        reportOtherInput?.focus();
+        return;
+      }
+      finalZone = customArea;
+    }
 
     try {
       const res = await api.createItem({
         type,
         title,
         category,
-        zone,
+        zone: finalZone,
+        phone,
         location,
         description,
         image: currentResizedDataUrl

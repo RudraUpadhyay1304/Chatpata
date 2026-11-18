@@ -3,7 +3,7 @@
  * Protected page: allows editing, resolving, deleting own items.
  */
 import { api } from './api.js';
-import { initApp, openReportModal, timeAgo } from './common.js';
+import { initApp, openReportModal, timeAgo, getZoneLabel } from './common.js';
 
 let currentUser = null;
 let myItems = [];
@@ -102,7 +102,8 @@ function renderReports() {
       const locP = document.createElement('p');
       locP.style.fontSize = '0.75rem';
       locP.style.color = 'var(--on-surface-variant)';
-      locP.textContent = `${item.location} • ${item.category} • Logged ${timeAgo(item.createdAt)}`;
+      const phoneText = item.phone ? ` • 📞 ${item.phone}` : '';
+      locP.textContent = `${item.location} (${getZoneLabel(item.zone)}) • ${item.category}${phoneText} • Logged ${timeAgo(item.createdAt)}`;
       leftCol.appendChild(locP);
 
       topRow.appendChild(leftCol);
@@ -181,11 +182,17 @@ function setupEditModal() {
     e.preventDefault();
     const id = document.getElementById('editItemId').value;
     const title = document.getElementById('editTitle').value.trim();
+    const phone = document.getElementById('editPhone').value.trim();
     const location = document.getElementById('editLocation').value.trim();
     const description = document.getElementById('editDesc').value.trim();
 
+    if (phone && phone.replace(/\D/g, '').length < 10) {
+      alert('Please enter a valid phone number with at least 10 digits.');
+      return;
+    }
+
     try {
-      await api.updateItem(id, { title, location, description });
+      await api.updateItem(id, { title, phone, location, description });
       closeModal();
       await loadReports();
     } catch (err) {
@@ -198,6 +205,7 @@ function openEditModal(item) {
   const modal = document.getElementById('editItemModal');
   document.getElementById('editItemId').value = item.id;
   document.getElementById('editTitle').value = item.title;
+  document.getElementById('editPhone').value = item.phone || '';
   document.getElementById('editLocation').value = item.location;
   document.getElementById('editDesc').value = item.description || '';
   modal.classList.add('open');

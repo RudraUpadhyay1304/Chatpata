@@ -3,7 +3,7 @@
  * Displays single item, handles ownership checks for edit/delete, and triggers claim modal.
  */
 import { api } from './api.js';
-import { initApp, openClaimModal, timeAgo } from './common.js';
+import { initApp, openClaimModal, timeAgo, getZoneLabel } from './common.js';
 
 let currentUser = null;
 let currentItem = null;
@@ -52,10 +52,21 @@ async function loadItem(id) {
     document.getElementById('detailTitle').textContent = currentItem.title;
     document.getElementById('detailCategory').textContent = currentItem.category;
     document.getElementById('detailLocation').textContent = currentItem.location;
-    document.getElementById('detailZone').textContent = `Campus Zone: ${currentItem.zone}`;
+    document.getElementById('detailZone').textContent = `Campus Area: ${getZoneLabel(currentItem.zone)}`;
     document.getElementById('detailDescription').textContent = currentItem.description || 'No additional description provided.';
     document.getElementById('detailReporter').textContent = `@${currentItem.ownerUsername || 'campus_user'}`;
     document.getElementById('detailDate').textContent = `Logged ${timeAgo(currentItem.createdAt)}`;
+
+    // Reporter Phone display
+    const contactCard = document.getElementById('reporterContactCard');
+    if (currentItem.phone) {
+      if (contactCard) {
+        contactCard.style.display = 'block';
+        document.getElementById('detailPhoneDisplay').textContent = currentItem.phone;
+      }
+    } else if (contactCard) {
+      contactCard.style.display = 'none';
+    }
 
     const img = document.getElementById('detailImg');
     img.src = currentItem.image || 'data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22400%22%20height%3D%22300%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20400%20300%22%20preserveAspectRatio%3D%22none%22%3E%3Crect%20width%3D%22400%22%20height%3D%22300%22%20fill%3D%22%23eceef3%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20fill%3D%22%23737686%22%20font-size%3D%2216%22%20text-anchor%3D%22middle%22%20dy%3D%22.3em%22%3ENo%20Image%20Uploaded%3C%2Ftext%3E%3C%2Fsvg%3E';
